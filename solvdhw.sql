@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Product` (
   `category_id` INT NULL,
   PRIMARY KEY (`product_id`),
   INDEX `category_id_idx` (`category_id` ASC) VISIBLE,
-  CONSTRAINT `category_id`
+  CONSTRAINT `fk_product_category`
     FOREIGN KEY (`category_id`)
     REFERENCES `mydb`.`Category` (`category_id`)
     ON DELETE NO ACTION
@@ -83,12 +83,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`UserAddress` (
   `address_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `address_id`),
   INDEX `address_id_idx` (`address_id` ASC) VISIBLE,
-  CONSTRAINT `user_id`
+  CONSTRAINT `fk_useraddress_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `mydb`.`User` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `address_id`
+  CONSTRAINT `fk_useraddress_address`
     FOREIGN KEY (`address_id`)
     REFERENCES `mydb`.`Address` (`address_id`)
     ON DELETE CASCADE
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Order` (
   `total_amount` DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (`order_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `user_id`
+  CONSTRAINT `fk_order_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `mydb`.`User` (`user_id`)
     ON DELETE NO ACTION
@@ -126,12 +126,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`OrderItem` (
   PRIMARY KEY (`order_item_id`),
   INDEX `order_id_idx` (`order_id` ASC) VISIBLE,
   INDEX `product_id_idx` (`product_id` ASC) VISIBLE,
-  CONSTRAINT `order_id`
+  CONSTRAINT `fk_orderitem_order`
     FOREIGN KEY (`order_id`)
     REFERENCES `mydb`.`Order` (`order_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `product_id`
+  CONSTRAINT `fk_orderitem_product`
     FOREIGN KEY (`product_id`)
     REFERENCES `mydb`.`Product` (`product_id`)
     ON DELETE CASCADE
@@ -151,12 +151,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Review` (
   PRIMARY KEY (`review_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
   INDEX `product_id_idx` (`product_id` ASC) VISIBLE,
-  CONSTRAINT `user_id`
+  CONSTRAINT `fk_review_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `mydb`.`User` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `product_id`
+  CONSTRAINT `fk_review_product`
     FOREIGN KEY (`product_id`)
     REFERENCES `mydb`.`Product` (`product_id`)
     ON DELETE SET NULL
@@ -182,12 +182,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`UserCart` (
   `cart_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `cart_id`),
   INDEX `cart_id_idx` (`cart_id` ASC) VISIBLE,
-  CONSTRAINT `user_id`
+  CONSTRAINT `fk_usercart_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `mydb`.`User` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `cart_id`
+  CONSTRAINT `fk_usercart_cart`
     FOREIGN KEY (`cart_id`)
     REFERENCES `mydb`.`Cart` (`cart_id`)
     ON DELETE NO ACTION
@@ -206,12 +206,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`CartItem` (
   PRIMARY KEY (`cart_item_id`),
   INDEX `cart_id_idx` (`cart_id` ASC) VISIBLE,
   INDEX `product_id_idx` (`product_id` ASC) VISIBLE,
-  CONSTRAINT `cart_id`
+  CONSTRAINT `fk_cartitem_cart`
     FOREIGN KEY (`cart_id`)
     REFERENCES `mydb`.`Cart` (`cart_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `product_id`
+  CONSTRAINT `fk_cartitem_product`
     FOREIGN KEY (`product_id`)
     REFERENCES `mydb`.`Product` (`product_id`)
     ON DELETE NO ACTION
@@ -231,12 +231,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Payment` (
   PRIMARY KEY (`payment_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
   INDEX `order_id_idx` (`order_id` ASC) VISIBLE,
-  CONSTRAINT `user_id`
+  CONSTRAINT `fk_payment_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `mydb`.`User` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `order_id`
+  CONSTRAINT `fk_payment_order`
     FOREIGN KEY (`order_id`)
     REFERENCES `mydb`.`Order` (`order_id`)
     ON DELETE NO ACTION
