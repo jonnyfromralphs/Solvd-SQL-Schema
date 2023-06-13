@@ -94,13 +94,14 @@ DELETE FROM mydb.product WHERE product_id = 1;
 DELETE FROM mydb.category WHERE category_id = 2;
 DELETE FROM mydb.cart WHERE cart_id = 1;
 
-SELECT * FROM mydb.user AS u
+SELECT u.username, SUM(o.order_amount) AS total_user_orders FROM mydb.user AS u
 JOIN mydb.useraddress AS ua ON u.user_id = ua.user_id
 JOIN mydb.address AS a ON ua.address_id = a.address_id
 JOIN mydb.order AS o ON u.user_id = o.user_id
 JOIN mydb.orderitem AS oi ON o.order_id = oi.order_id
 JOIN mydb.product AS p ON oi.product_id = p.product_id
-JOIN mydb.category AS c ON p.category_id = c.category_id;
+JOIN mydb.category AS c ON p.category_id = c.category_id
+WHERE MONTH(o.order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH);
 
 SELECT * FROM mydb.product AS p
 LEFT JOIN mydb.category AS c ON p.category_id = c.category_id;
